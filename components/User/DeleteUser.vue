@@ -15,7 +15,7 @@
             class="relative mt-3 mb-5 text-[15px] leading-normal"
           >
            <p>
-            The user <span class="text-indigo-500 font-bold block truncate">{{ props.user.name }}</span> will be permanently deleted permanently and the folders/files associated with this user can be lost.
+            The user <span class="text-indigo-500 font-bold">{{ props.user.name }}</span> will be permanently deleted permanently and the folders/files associated with this user can be lost.
            </p>
 
            <p><span class="font-semibold text-red-500">This action cannot be undone.</span></p>

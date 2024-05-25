@@ -8,8 +8,8 @@
         <DialogContent
           class="data-[state=open]:animate-contentShow fixed top-[50%] left-[50%] max-h-[85vh] w-[90vw] max-w-[450px] translate-x-[-50%] translate-y-[-50%] rounded-[6px] bg-white p-[25px] shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px] focus:outline-none z-[100]"
         >
-          <DialogTitle class="m-0 text-[17px] my-2">
-            Are you sure you want to delete the file <span class="text-indigo-500 font-bold block truncate">{{ props.file.name }}</span>?
+          <DialogTitle :title="props.file.name" class="m-0 text-[17px] my-2 line-clamp-2">
+            Are you sure you want to delete the file <span class="text-indigo-500 font-bold">{{ props.file.name }}</span>?
           </DialogTitle>
           <DialogDescription
             class="relative mt-3 mb-5 text-[15px] leading-normal"
