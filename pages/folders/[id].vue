@@ -2,7 +2,10 @@
   <div class="pt-8 px-4 relative overflow-hidden h-full">
     <Breadcrumb :links="links" />
 
-    <div v-if="isLoading" class="pt-5 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+    <div
+      v-if="isLoading"
+      class="pt-5 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+    >
       <SpinIcon class="w-10 h-10 animate-spin text-indigo-500" />
     </div>
     <div
@@ -73,7 +76,11 @@
             </FileDropdown>
           </div>
 
-          <FileInfo :file="file" :showFileInfo="showFileInfo" :close="() => showFileInfo = false" />
+          <FileInfo
+            :file="file"
+            :showFileInfo="showFileInfo"
+            :close="() => (showFileInfo = false)"
+          />
         </div>
       </div>
 
@@ -119,34 +126,74 @@
 
     <Teleport to="body" v-if="showFileUploadStatus">
       <div class="fixed bottom-0 right-0 p-4 m-4 bg-white rounded-md shadow-md">
-        <button @click="clearUploadStatus()" class="absolute top-0 right-0 p-2 text-gray-500 hover:text-gray-700">
-          <svg width="24px" height="24px" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        <button
+          @click="clearUploadStatus()"
+          class="absolute top-0 right-0 p-2 text-gray-500 hover:text-gray-700"
+        >
+          <svg
+            width="24px"
+            height="24px"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+          >
+            <path
+              d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+            ></path>
+          </svg>
         </button>
 
         <p class="mb-4">
-          <span>Upload status in </span> 
-          <span class="font-semibold text-indigo-500">{{ selectedFolder.name}}</span>
+          <span>Upload status in </span>
+          <span class="font-semibold text-indigo-500">{{
+            selectedFolder.name
+          }}</span>
         </p>
-        <div v-for="file in fileUploadStatus" :key="file.id" class="flex gap-32 items-center mb-2 justify-between">
+        <div
+          v-for="file in fileUploadStatus"
+          :key="file.id"
+          class="flex gap-32 items-center mb-2 justify-between"
+        >
           <div class="flex gap-2 items-center">
             <div :title="file.message" v-html="getFileIcon(file.type)"></div>
-            <p :title="file.name" class="truncate max-w-[300px]">{{ file.name }}</p>  
+            <p :title="file.name" class="truncate max-w-[300px]">
+              {{ file.name }}
+            </p>
           </div>
-          
+
           <div :title="file.message">
-            <SpinIcon v-if="file.status === 'uploading'" class="animate-spin text-indigo-500" />
+            <SpinIcon
+              v-if="file.status === 'uploading'"
+              class="animate-spin text-indigo-500"
+            />
             <div v-if="file.status === 'success'" class="text-indigo-500">
-              <svg width="24px" height="24px" viewBox="0 0 24 24" fill="#0F9D58"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"></path></svg>
+              <svg
+                width="24px"
+                height="24px"
+                viewBox="0 0 24 24"
+                fill="#0F9D58"
+              >
+                <path
+                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
+                ></path>
+              </svg>
             </div>
 
             <div v-if="file.status === 'fail'" class="text-indigo-500">
-              <svg width="24px" height="24px" viewBox="0 0 24 24" fill="#DC2626"  ><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m1 15h-2v-2h2zm0-4h-2V7h2z"></path></svg>
+              <svg
+                width="24px"
+                height="24px"
+                viewBox="0 0 24 24"
+                fill="#DC2626"
+              >
+                <path
+                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m1 15h-2v-2h2zm0-4h-2V7h2z"
+                ></path>
+              </svg>
             </div>
           </div>
         </div>
       </div>
     </Teleport>
-
   </div>
 </template>
 
@@ -154,9 +201,9 @@
 import { storeToRefs } from "pinia";
 import FileDropdown from "~/components/File/FileDropdown.vue";
 import Breadcrumb from "~/components/Menu/Breadcrumb.vue";
-import { getFileIcon, getFileType } from '~/assets/js/utils.js'
-import SpinIcon from '~/assets/img/icons/SpinIcon.vue'
-import FileInfo from '~/components/File/FileInfo.vue'
+import { getFileIcon, getFileType } from "~/assets/js/utils.js";
+import SpinIcon from "~/assets/img/icons/SpinIcon.vue";
+import FileInfo from "~/components/File/FileInfo.vue";
 
 definePageMeta({
   layout: "authenticated",
@@ -183,7 +230,7 @@ const links = computed(() => {
 
   if (origin.value === "Shared_with_me") {
     breadcrumbLinks.push({
-      name: 'Shared with me',
+      name: "Shared with me",
       path: `/folders/shared-with-me`,
       folder: null,
     });
@@ -191,7 +238,7 @@ const links = computed(() => {
 
   if (origin.value === "sharing") {
     breadcrumbLinks.push({
-      name: 'Sharing',
+      name: "Sharing",
       path: `/folders/sharing`,
       folder: null,
     });
@@ -209,7 +256,7 @@ const links = computed(() => {
 const isDragging = ref(false);
 const showFileUploadStatus = ref(false);
 const fileUploadStatus = ref([]);
-const isLoading = ref(false);
+const isLoading = ref(true);
 const error = ref("");
 const status = ref("");
 const timeouts = ref([]);
@@ -287,16 +334,19 @@ const clearUploadStatus = () => {
 };
 
 onMounted(async () => {
-  isLoading.value = true;
-  const id = selectedFolder.value.id || folderId;
-  const response = await $folderStore.getFiles(id);
+  setTimeout(async () => {
+    const id = selectedFolder.value.id || folderId;
+    const response = await $folderStore.getFiles(id);
 
+    console.log(response);
 
-  if (response.error) {
-    navigateTo("/folders");
-  }
-  setTimeout(() => {
-    isLoading.value = false;
-  }, 300);
+    if (response.error) {
+      navigateTo("/folders");
+    }
+    setTimeout(() => {
+      isLoading.value = false;
+    }, 300);
+  }, 200);
+ 
 });
 </script>

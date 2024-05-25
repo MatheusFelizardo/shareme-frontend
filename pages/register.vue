@@ -1,7 +1,13 @@
 <template>
-  <div class="w-full h-full flex px-4 pt-8">
+
+  <div class="w-full h-full flex justify-center pt-20">
     <div class="w-10/12 max-w-96">
-      <h1 class=" font-light mb-6">Creating a new account</h1>
+      <div class="mb-10 flex w-full justify-center">
+        <Logo />
+      </div>
+      
+      <h1 class="text-2xl font-light mb-6">Register</h1>
+
       <form @submit.prevent="register" class="text-black">
         <div class="mb-4 relative">
           <span class="text-[10px] absolute top-0 right-0 text-red-500">{{ errors.name }}</span>
@@ -15,7 +21,7 @@
           <input @input="resetStates()" required type="lastName" id="lastName" v-model="form.lastName" class="border-indigo-500 text-xs w-full mt-1 p-2 border">
         </div>
 
-        <div class="mb-4 relative">
+        <div class="mb-4 relative hidden">
           <span class="text-[10px] absolute top-0 right-0 text-red-500">{{ errors.role }}</span>
 
           <label for="role" class="block text-gray-300 text-xs">Role</label>
@@ -39,22 +45,28 @@
         <div class="relative">
           <span class="text-xs absolute -bottom-10 left-0 text-red-500">{{ errors.response }}</span>
           <span class="text-xs absolute -bottom-10 left-0 text-green-500">{{ successMessage }}</span>
-          <button :disabled="isCreating" type="submit" class="w-full bg-indigo-500 text-white p-2 rounded">Create account</button>
+          <button :disabled="isCreating" type="submit" class="w-full bg-indigo-500 text-white p-2 rounded">
+            Create account
+            <SpinIcon v-if="isCreating" class="animate-spin absolute right-2 top-2" />
+          </button>
         </div>
-      
-
       </form>
+
+      <div class="text-white text-xs mt-2 text-right"> 
+        Click here to 
+        <router-link to="/" class="text-indigo-300 text-semibold transition-all hover:text-indigo-500">Login</router-link>
+      </div>
     </div>
   </div>
+
+    
+   
 </template>
 
 <script setup>
 import { ref } from 'vue';
-
-definePageMeta({
-    layout: 'authenticated',
-    breadcrumb: "Sharing"
-  })
+import SpinIcon from '~/assets/img/icons/SpinIcon.vue';
+import Breadcrumb from '~/components/Menu/Breadcrumb.vue';
 
 const { $userStore } = useNuxtApp();
 
@@ -88,8 +100,9 @@ const register = async () => {
     role: form.value.role
   };
 
-  if (data.password.length < 6) {
+  if (data.password.length < 8) {
     errors.value.password = 'Password must have at least 8 characters'
+    isCreating.value = false;
     return;
   }
 
@@ -101,6 +114,14 @@ const register = async () => {
     form.value.name = '';
     form.value.lastName = '';
     form.value.role = 'user';
+
+    setTimeout(async ()=> {
+      const login = await $userStore.login(data.email, data.password);
+      if (login.success) {
+        navigateTo('/folders');
+      }
+    }, 1000)
+    
   } else {
     errors.value.response = registerResponse.message;
   }
@@ -116,6 +137,7 @@ const resetStates = () => {
   errors.value.role = '';
   errors.value.response = '';
   successMessage.value = '';
+  isCreating.value = false;
 };
 
 </script>

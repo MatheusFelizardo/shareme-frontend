@@ -36,5 +36,19 @@
 </template>
 
 <script setup>
+import NavMenu from '~/components/Menu/NavMenu.vue';
+
+const { $userStore } = useNuxtApp()
+
+onMounted(async () => {
+  const hasUser = await $userStore.userLogin();
+  
+  if (hasUser) {
+    return
+  }
+  
+  localStorage.removeItem('jwtToken');
+  navigateTo('/')
+});
 
 </script>

@@ -93,9 +93,11 @@
   const showCreateFolder = ref(false)
 
   onMounted(async () => {
+   setTimeout(async ()=> {
     const publicFoldersResponse =  await $folderStore.getPublicFolders(email)
     publicFolders.value = publicFoldersResponse
     isLoading.value = false
+   }, 200)
   })
 </script>
 

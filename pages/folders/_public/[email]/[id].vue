@@ -117,15 +117,17 @@ const files = ref([]);
 const errorMessage = ref("");
 
 onMounted(async () => {
-  const filesResponse = await $folderStore.geFilesInPublicFolder(folderId, email);
+  setTimeout(async ()=> {
+    const filesResponse = await $folderStore.geFilesInPublicFolder(folderId, email);
 
-  if (filesResponse.message) {
-    navigateTo("/folders");
-  }
-  files.value = filesResponse.data
+    if (filesResponse.message) {
+      navigateTo("/folders");
+    }
+    files.value = filesResponse.data
 
-  setTimeout(() => {
-    isLoading.value = false;
-  }, 300);
+    setTimeout(() => {
+      isLoading.value = false;
+    }, 300);
+  }, 200)
 });
 </script>

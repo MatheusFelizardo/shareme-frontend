@@ -55,7 +55,7 @@
           </DialogDescription>
 
           <div class="mt-[25px] flex justify-end">
-            <Label
+            <label
               @click="()=> {
                 if (!folder) error = 'Please select a folder first'
               }"
@@ -76,7 +76,7 @@
                 @change="handleUpload"
               >
               <span>Upload file</span>
-            </Label>
+            </label>
           </div>
 
           <DialogClose

@@ -65,6 +65,7 @@ export const useUserStore = defineStore('user', {
         }
 
         const {sub, iat, exp, ...user} = jwtDecode(this.jwtToken);
+        
         this.user = user
         await this.getAllUsers()
         return true

@@ -1,7 +1,7 @@
 <template>
   <div class="w-full h-full flex justify-center pt-20">
     <div class="w-10/12 max-w-96">
-      <div class="mb-20 flex w-full justify-center">
+      <div class="mb-10 flex w-full justify-center">
         <Logo />
       </div>
       <h1 class="text-2xl font-light mb-6">Login</h1>
@@ -43,7 +43,7 @@
 
         <div class="text-white text-xs mt-2 text-right"> 
           Don't have an account? 
-          <a href="mailto:admin@shareme.com" class="text-indigo-300 text-semibold transition-all hover:text-indigo-500">Request access to your manager</a>
+          <router-link to="/register" class="text-indigo-300 text-semibold transition-all hover:text-indigo-500">Register</router-link>
         </div>
       </form>
     </div>

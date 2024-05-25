@@ -27,6 +27,10 @@ export const useFolderStore = defineStore('folder', {
           }
         })
 
+        if (response.statusCode === 401) {
+          this.unathorizedAccess()
+        }
+
         if (response.data.error) {
           return response.data
         }
@@ -46,6 +50,11 @@ export const useFolderStore = defineStore('folder', {
             Authorization: `Bearer ${token}`
           }
         })
+
+        if (response.statusCode === 401) {
+          this.unathorizedAccess()
+        }
+
         const { data } = response.data
         this.folders = data
         this.filterSharedFolders()
@@ -54,7 +63,9 @@ export const useFolderStore = defineStore('folder', {
         
         return this.folders
       } catch (error) {
+        this.unathorizedAccess()
         return error.response
+        
       }
     },
 
@@ -176,6 +187,10 @@ export const useFolderStore = defineStore('folder', {
           }
         })
 
+        if (response.statusCode === 401) {
+          this.unathorizedAccess()
+        }
+
         if (!response.data.error) {
           this.getFolders()
         }
@@ -195,7 +210,7 @@ export const useFolderStore = defineStore('folder', {
           }
         })
 
-        if (!response.data.error) {
+        if (response.data && !response.data.error) {
           this.folders = this.folders.filter(folder => folder.id !== folderId)
           this.filterSharedFolders()
         }
@@ -300,6 +315,7 @@ export const useFolderStore = defineStore('folder', {
           },
           responseType: 'blob' 
         });
+        console.log(response)
 
         const url = window.URL.createObjectURL(new Blob([response.data]));
         const link = document.createElement('a');
@@ -315,6 +331,21 @@ export const useFolderStore = defineStore('folder', {
         return response.data;
       } catch (error) {
         return error.response;
+      }
+    },
+
+    async findFileById(fileId) {
+      try {
+        const token = useUserStore().jwtToken
+        const response = await $axios.get(`/files/${fileId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
+
+        return response.data
+      } catch (error) {
+        return error.response
       }
     },
 
@@ -386,6 +417,13 @@ export const useFolderStore = defineStore('folder', {
       this.sharedFolders = []
       this.selectedFolder = {}
       this.folderFiles = []
+    },
+
+    unathorizedAccess() {
+      localStorage.removeItem('jwtToken')
+      if (process.client) {
+        window.location.href = '/'
+      }
     }
   },
 })

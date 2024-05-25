@@ -8,15 +8,15 @@
         <DialogContent
           class="data-[state=open]:animate-contentShow fixed top-[50%] left-[50%] max-h-[85vh] w-[90vw] max-w-[450px] translate-x-[-50%] translate-y-[-50%] rounded-[6px] bg-white p-[25px] shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px] focus:outline-none z-[100]"
         >
-          <DialogTitle class="m-0 text-[17px] my-2">
-            Information about <span class="text-indigo-500 font-bold">{{ props.file.name }}</span>
+          <DialogTitle class="m-0 text-[17px] my-2 overflow-hidden">
+            Information about <span :title="props.file.name" class="text-indigo-500 font-bold block truncate">{{ props.file.name }}</span>
           </DialogTitle>
           <DialogDescription
             class="relative mt-4 text-[15px] leading-normal"
           >
             <div class="mb-1">
               <p>Name</p>
-              <p class="text-gray-500">{{ props.file.path }}</p>
+              <p :title="props.file.path" class="text-gray-500 truncate">{{ props.file.path }}</p>
             </div>
 
             <div class="mb-1">
